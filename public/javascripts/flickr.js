@@ -35,7 +35,7 @@
             data: flickrAPI_RequestParams,
             success: function (data) {
                 if (data.photos.photo.length > 0) {
-                    window.Website.Homepage.showPhotos(data);
+                    window.Website.Country.showPhotos(data);
                 } else {
                     console.log(data.photos);
                 }

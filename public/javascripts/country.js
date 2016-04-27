@@ -4,40 +4,110 @@
 (function () {
     "use strict";
 
+    var classes = 'list-group-item';
+    var countryItem;
+
+    function searchHandler() {
+
+//            var areaNameQueryParam = 'geo_area_name';
+//            var url = 'getItem?' + areaNameQueryParam + '=' + areaName;
+
+        var url = 'getItem';
+        var areaName = $('#area-query-input').val();
+
+        var requestParameters = {
+            geo_area_name: areaName
+        };
+
+        $.getJSON(url, requestParameters)
+                .success(function (json) {
+                    console.log("Client found:" + json.AreaName);
+                    countryItem = json;
+                    populateCountryInfoList(json);
+                    searchPhotos(json.ImageQueryTxt);
+                })
+//                    .done(function (json) {
+//                        var foundItem = json;
+//                        console.log("Client found:" + foundItem);
+//                    })
+                .fail(function (jqxhr, textStatus, error) {
+                    var err = textStatus + ", " + error;
+                    console.log("Request Failed: " + err);
+                    countryItem = null;
+                });
+//                    .always(function () {
+//                        console.log("complete");
+//                    });
+
+    }
+
+    function searchPhotos(searchText, page) {
+        if (searchText.length === 0) {
+            alert('Error: the field is required');
+        }
+
+        page = page > 0 ? page : 1;
+        window.Flickr.searchText(searchText, page);
+    }
+
+    function showPhotos(data) {
+        window.Gallery.ProcessPhotos(data.photos.photo);
+    }
+
+    function populateCountryInfoList(areaInfo) {
+        var $container = $('#area-info-ul');
+        if ($container.length === 0)
+            return;
+
+        $container.empty();
+
+        var $listItem;
+        for (var i = 0; i < areaInfo.InfoTxt.length; i++) {
+
+            $listItem = $('<li/>', {
+                "class": classes
+            });
+            $listItem.text(areaInfo.InfoTxt[i]);
+            $container.append($listItem);
+
+//            insertClearFix($listItem, i);
+        }
+    }
+
 
     function main() {
-        $('#insert').on('click', function () {
-            var desc = $('#desc').val(),
-                    sku = $('#sku').val(),
-                    quantity = $('#quant').val(),
-                    price = $('#price').val(),
-                    newItem = {"description": desc,
-                        "sku": sku,
-                        "quantity": quantity,
-                        "price": price
-                    };
-            $.post("putItem", newItem, function (result) {
-                console.log(result);
-            });
+
+        $('#imgControlsDiv').hide();
+
+
+        $('#area-query-button').on('click', function (event) {
+            event.preventDefault();
+
+            searchHandler();
         });
 
-        $('#retrieve').on('click', function () {
-            var sku = $('#sku').val(),
-                    url = 'getItem?sku=' + sku;
-            $.getJSON(url, function (result) {
-                var foundItem = result[0];
-                $('#desc').val(foundItem.description);
-                $('#sku').val(foundItem.sku);
-                $('#quant').val(foundItem.quantity);
-                $('#price').val(foundItem.price);
-            });
+        // search box event handling
+        $("query-area-form").on('submit', function (event) {
+            event.preventDefault();
+
+            searchHandler();
+//            return false;
         });
+
+//        $("#area-query-input").keypress(function (event) {
+//            if (event.which == 13) {
+//                event.preventDefault();
+//                
+//                searchHandler();
+//            }
+//        });
     }
 
     window.Website = window.Utility.extend(window.Website || {}, {
         Country: {
+            showPhotos: showPhotos,
             main: main
         }
     });
 
-}());
+})();

@@ -4,9 +4,9 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        
+
         <title>Country Info</title>
-       
+
         <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
         <script src="javascripts/jquery-2.2.2.js"></script>
         <script src="bootstrap/js/bootstrap.js"></script>
@@ -14,40 +14,50 @@
         <script src="javascripts/utility.js"></script>
         <script src="javascripts/gallery.js"></script>
         <script src="javascripts/flickr.js"></script>
-        <script src="javascripts/index.js"></script>
         <script src="javascripts/country.js"></script>
-        
+
     </head>
     <body>
-        <header class="island">
-            <h1>Flickr gallery</h1>
-            <div>
-                <form class="js-form-search" action="/search" method="get" role="search">
-                    <label for="query">Search:</label>
-                    <input type="search" name="query" id="query" placeholder="Search" value="kittens" required />
-                    <button type="submit">Search</button>
-                </form>
-            </div>
-            <div>
-                <form action="action"></form>
-                <label for="countryName">Get Facts by Country</label>
-                <input id="countryName" type="search" placeholder="Search" value="London" required />
-                <input id="retrieve" type="submit" value="Retrieve">
-            </div>
-        </header>
-        <main>
-            <div class="jumbotron" id="bsPhotoGalleryModal">
-                <div class="container">
-                    <div class="modal-content">
-                        <div class="modal-body"></div>
+
+        <header>
+            <div class="container-fluid">
+                <div class="page-header">
+                    <h3>Country Information</h3>
+                </div>
+                <form id="query-area-form" class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <label class="label label-info" for="area-query-input" form="query-area-form">Search for Country:</label>
+                        <input form="query-area-form" class="form-control" type="search" name="area-name" id="area-query-input" placeholder="Search" value="" required>
+                        <button form="query-area-form" id="area-query-button" type="submit" class="btn btn-success">Go</button>
                     </div>
+                </form>
+
+            </div> 
+        </header>
+
+        <main>
+            <div class="container-fluid">
+                <div class="jumbotron" id="jumbotronAreaImage">
+                    <img class="img-responsive" id="imgCountry">
+                    <div id="imgControlsDiv">
+                        <a style="float: left" class="controls next">next &raquo;</a>
+                        <a style="float: right" class="controls previous">&laquo; prev</a>
+                    </div>
+
+                </div>
+                <div class="jumbotron" id="countryInfo">
+
+                    <ul id="area-info-ul" class="list-group">
+
+                    </ul>
+
                 </div>
             </div>
         </main>
 
+        <footer></footer>
 
         <script>$(document).ready(Website.Country.main);</script>
 
-        <footer></footer>
     </body>
 </html>
