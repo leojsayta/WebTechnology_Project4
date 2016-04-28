@@ -6,14 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 //var multer = require('multer'); 
 
-//var routes = require('./routes/index');
-//var users = require('./routes/users');
-
 var app = express();
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -24,36 +17,28 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//app.use('/', routes);
-//app.use('/users', users);
+var dbConnectStr = "mongodb://adminJA:wt344**@localhost,ds017231.mlab.com:17231/areainfo/Country";
 
 // import the mongoose library
 var mongoose = require("mongoose");
-mongoose.connect("mongodb://adminJA:wt344**@localhost,ds017231.mlab.com:17231/areainfo/Country");
+mongoose.connect(dbConnectStr);
 
 // This is our mongoose model for countries
 var CountrySchema, Country;
 
 CountrySchema = mongoose.Schema({
-        InfoTxt: [String],
-        ImageQueryTxt: String,
-        AreaName: String
-    });
+    InfoTxt: [String],
+    ImageQueryTxt: String,
+    AreaName: String
+});
 
-    Country = mongoose.model("Country", CountrySchema);
+Country = mongoose.model("Country", CountrySchema);
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
     //we're connected!
-    
-//    CountrySchema = mongoose.Schema({
-//        InfoTxt: [String],
-//        ImageQueryTxt: String,
-//        AreaName: String
-//    });
-//
-//    Country = mongoose.model("Country", CountrySchema);
+    console.log("Connected to " + dbConnectStr + ".");
 
 //    var newCountry = new Country({
 //        InfoTxt: ["Spain is a Country.", "Spain grows wine."],
@@ -75,7 +60,7 @@ db.once('open', function () {
 //            console.log(items);
 //        }
 //    });
-    
+
 //    Country.findOne({AreaName: "France"}, function (err, item) {
 //        if (err !== null) {
 //            console.log(err);
@@ -84,8 +69,6 @@ db.once('open', function () {
 //        }
 //    });
 });
-
-
 
 // The field used here for getJSON() is req.query
 app.get("/getItem", function (req, res) {
@@ -116,38 +99,6 @@ app.get("/getItem", function (req, res) {
 //    });
 //});
 
-
-
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
-
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function (err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function (err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
-});
 
 
 module.exports = app;
