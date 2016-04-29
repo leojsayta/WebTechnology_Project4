@@ -7,14 +7,13 @@
     var classes = 'list-group-item';
     var countryItem;
 
-    function searchHandler() {
+    function searchHandler(areaName) {
 
 //            var areaNameQueryParam = 'geo_area_name';
 //            var url = 'getItem?' + areaNameQueryParam + '=' + areaName;
 
         var url = 'getItem';
-        var areaName = $('#area-query-input').val();
-
+        
         var requestParameters = {
             geo_area_name: areaName
         };
@@ -83,15 +82,23 @@
         $('#area-query-button').on('click', function (event) {
             event.preventDefault();
 
-            searchHandler();
+            if ($('#area-query-input').length > 0)
+                searchHandler($('#area-query-input').val());
         });
 
         // search box event handling
         $("query-area-form").on('submit', function (event) {
             event.preventDefault();
 
-            searchHandler();
+            if ($('#area-query-input').length > 0)
+                searchHandler($('#area-query-input').val());
 //            return false;
+        });
+        
+        $('button.country').click(function (event) {
+            var countryName = this.value;
+            searchHandler(countryName);
+            return false;
         });
 
 //        $("#area-query-input").keypress(function (event) {

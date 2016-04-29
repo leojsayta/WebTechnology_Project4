@@ -31,7 +31,13 @@
                         <button form="query-area-form" id="area-query-button" type="submit" class="btn btn-success">Go</button>
                     </div>
                 </form>
-
+                <div class="btn-group navbar-left" role="group" aria-label="...">
+                    <button value="England" id="englandButton" type="button" class="btn btn-default country">England</button>
+                    <button value="France" id="franceButton" type="button" class="btn btn-default country">France</button>
+                    <button value="Greece" id="greeceButton" type="button" class="btn btn-default country">Greece</button>
+                    <button value="Italy" id="italyButton" type="button" class="btn btn-default country">Italy</button>
+                    <button value="Spain" id="spainButton" type="button" class="btn btn-default country">Spain</button>
+                </div>
             </div> 
         </header>
 
@@ -40,17 +46,18 @@
                 <div class="jumbotron" id="jumbotronAreaImage">
                     <img class="img-responsive" id="imgCountry">
                     <div id="imgControlsDiv">
-                        <a style="float: left" class="controls next">next &raquo;</a>
-                        <a style="float: right" class="controls previous">&laquo; prev</a>
+                        <a style="float: left" class="controls next btn btn-default" href="#" role="button">
+                            next
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        </a>
+                        <a style="float: right" class="controls previous btn btn-default" href="#" role="button">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            prev
+                        </a>
                     </div>
-
                 </div>
                 <div class="jumbotron" id="countryInfo">
-
-                    <ul id="area-info-ul" class="list-group">
-
-                    </ul>
-
+                    <ul id="area-info-ul" class="list-group"/>
                 </div>
             </div>
         </main>
