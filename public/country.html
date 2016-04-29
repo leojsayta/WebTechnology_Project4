@@ -10,6 +10,7 @@
         <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
         <script src="javascripts/jquery-2.2.2.js"></script>
         <script src="bootstrap/js/bootstrap.js"></script>
+        <link href="stylesheets/gallery.css" rel="stylesheet">
 
         <script src="javascripts/utility.js"></script>
         <script src="javascripts/gallery.js"></script>
@@ -22,12 +23,11 @@
         <header>
             <div class="container-fluid">
                 <div class="page-header">
-                    <h3>Country Information</h3>
+                    <h3 style="text-align: center">Country Information</h3>
                 </div>
                 <form id="query-area-form" class="navbar-form navbar-right">
                     <div class="form-group">
-                        <label class="label label-info" for="area-query-input" form="query-area-form">Search for Country:</label>
-                        <input form="query-area-form" class="form-control" type="search" name="area-name" id="area-query-input" placeholder="Search" value="" required>
+                        <input form="query-area-form" class="form-control" type="search" name="area-name" id="area-query-input" placeholder="Search for Country" required>
                         <button form="query-area-form" id="area-query-button" type="submit" class="btn btn-success">Go</button>
                     </div>
                 </form>
@@ -43,21 +43,29 @@
 
         <main>
             <div class="container-fluid">
-                <div class="jumbotron" id="jumbotronAreaImage">
-                    <img class="img-responsive" id="imgCountry">
-                    <div id="imgControlsDiv">
-                        <a style="float: left" class="controls next btn btn-default" href="#" role="button">
-                            next
-                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                        </a>
-                        <a style="float: right" class="controls previous btn btn-default" href="#" role="button">
-                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                            prev
-                        </a>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="jumbotron" id="jumbotronAreaImage">
+
+                            <div>
+                                <img class="img-responsive center-block img-rounded" id="imgCountry">
+                            </div>
+                            <div style="margin-top: 10px" id="imgControlsDiv">
+                                <a style="float: left" class="controls next btn btn-default" href="#" role="button">
+                                    next
+                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                </a>
+                                <a style="float: right" class="controls previous btn btn-default" href="#" role="button">
+                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                    prev
+                                </a>
+                            </div>
+
+                        </div>
+                        <div class="jumbotron" id="countryInfo">
+                            <ul id="area-info-ul" class="list-group"/>
+                        </div>
                     </div>
-                </div>
-                <div class="jumbotron" id="countryInfo">
-                    <ul id="area-info-ul" class="list-group"/>
                 </div>
             </div>
         </main>

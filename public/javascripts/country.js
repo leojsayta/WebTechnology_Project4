@@ -1,5 +1,3 @@
-// Use jQuery post() and getJSON() methods to communicate with 
-// the routes defined via server03.
 
 (function () {
     "use strict";
@@ -68,11 +66,8 @@
             });
             $listItem.text(areaInfo.InfoTxt[i]);
             $container.append($listItem);
-
-//            insertClearFix($listItem, i);
         }
     }
-
 
     function main() {
 
