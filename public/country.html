@@ -9,26 +9,28 @@
 
         <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
         <link href="stylesheets/gallery.css" rel="stylesheet">
+
+        <script src="javascripts/angular.js"></script>
     </head>
-    <body>
+    <body ng-app="ngCountryApp" ng-controller="ngCountryCntr">
 
         <header>
             <div class="container-fluid">
                 <div class="page-header">
-                    <h3 style="text-align: center">Country Information</h3>
+                    <h3 style="text-align: center">{{countryHeader}} Information</h3>
                 </div>
                 <form id="query-area-form" class="navbar-form navbar-right">
                     <div class="form-group">
-                        <input form="query-area-form" class="form-control" type="search" name="area-name" id="area-query-input" placeholder="Search for Country" required>
-                        <button form="query-area-form" id="area-query-button" type="submit" class="btn btn-success">Go</button>
+                        <input ng-model="countryName" form="query-area-form" class="form-control" type="search" name="area-name" id="area-query-input" placeholder="Search for Country" required>
+                        <button ng-click="getCountryInfo(countryName)" form="query-area-form" id="area-query-button" type="submit" class="btn btn-success">Go</button>
                     </div>
                 </form>
                 <div class="btn-group navbar-left" role="group" aria-label="...">
-                    <button value="England" id="englandButton" type="button" class="btn btn-default country">England</button>
-                    <button value="France" id="franceButton" type="button" class="btn btn-default country">France</button>
-                    <button value="Greece" id="greeceButton" type="button" class="btn btn-default country">Greece</button>
-                    <button value="Italy" id="italyButton" type="button" class="btn btn-default country">Italy</button>
-                    <button value="Spain" id="spainButton" type="button" class="btn btn-default country">Spain</button>
+                    <button ng-click="getCountryInfo('England')" value="England" id="englandButton" type="button" class="btn btn-default country">England</button>
+                    <button ng-click="getCountryInfo('France')" value="France" id="franceButton" type="button" class="btn btn-default country">France</button>
+                    <button ng-click="getCountryInfo('Greece')" value="Greece" id="greeceButton" type="button" class="btn btn-default country">Greece</button>
+                    <button ng-click="getCountryInfo('Italy')" value="Italy" id="italyButton" type="button" class="btn btn-default country">Italy</button>
+                    <button ng-click="getCountryInfo('Spain')" value="Spain" id="spainButton" type="button" class="btn btn-default country">Spain</button>
                 </div>
             </div> 
         </header>
@@ -55,7 +57,9 @@
 
                         </div>
                         <div class="jumbotron" id="countryInfo">
-                            <ul id="area-info-ul" class="list-group"/>
+                            <ul id="area-info-ul" class="list-group">
+                                <li class="list-group-item" ng-repeat="countryInfo in countryInfoList">{{countryInfo}}</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -63,16 +67,15 @@
         </main>
 
         <footer></footer>
-        
+
         <script src="javascripts/jquery-2.2.2.js"></script>
         <script src="bootstrap/js/bootstrap.js"></script>
-        <script src="javascripts/angular.js"></script>
 
         <script src="javascripts/utility.js"></script>
         <script src="javascripts/gallery.js"></script>
         <script src="javascripts/flickr.js"></script>
         <script src="javascripts/country.js"></script>
-        
+
         <script>$(document).ready(Website.Country.main);</script>
 
     </body>

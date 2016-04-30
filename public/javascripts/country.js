@@ -3,15 +3,16 @@
     "use strict";
 
     var classes = 'list-group-item';
-    var countryItem;
+    var countryItem = {};
 
     function searchHandler(areaName) {
 
 //            var areaNameQueryParam = 'geo_area_name';
 //            var url = 'getItem?' + areaNameQueryParam + '=' + areaName;
+        countryItem = {};
 
         var url = 'getItem';
-        
+
         var requestParameters = {
             geo_area_name: areaName
         };
@@ -35,7 +36,6 @@
 //                    .always(function () {
 //                        console.log("complete");
 //                    });
-
     }
 
     function searchPhotos(searchText, page) {
@@ -73,37 +73,60 @@
 
         $('#imgControlsDiv').hide();
 
-
-        $('#area-query-button').on('click', function (event) {
-            event.preventDefault();
-
-            if ($('#area-query-input').length > 0)
-                searchHandler($('#area-query-input').val());
-        });
-
         // search box event handling
         $("query-area-form").on('submit', function (event) {
             event.preventDefault();
 
-            if ($('#area-query-input').length > 0)
-                searchHandler($('#area-query-input').val());
-//            return false;
-        });
-        
-        $('button.country').click(function (event) {
-            var countryName = this.value;
-            searchHandler(countryName);
-            return false;
+            if ($('#area-query-input').length > 0) {
+                var country = $('#area-query-input').val();
+                $('div.page-header h3').text(country + " Information")
+                searchHandler(country);
+            }
         });
 
-//        $("#area-query-input").keypress(function (event) {
-//            if (event.which == 13) {
-//                event.preventDefault();
-//                
-//                searchHandler();
-//            }
-//        });
+        /*
+         $('#area-query-button').on('click', function (event) {
+         event.preventDefault();
+         
+         if ($('#area-query-input').length > 0)
+         searchHandler($('#area-query-input').val());
+         });
+         
+         $('button.country').click(function (event) {
+         var countryName = this.value;
+         searchHandler(countryName);
+         return false;
+         });
+         
+         $("#area-query-input").keypress(function (event) {
+         if (event.which == 13) {
+         event.preventDefault();
+         
+         searchHandler();
+         }
+         }); */
+
     }
+
+    var app = angular.module('ngCountryApp', []);
+    app.controller('ngCountryCntr', function ($scope, $http) {
+        $scope.countryHeader = 'Country';
+        $scope.countryInfoList = [];
+        $scope.getCountryInfo = function (country) {
+
+            var areaNameQueryParam = 'geo_area_name';
+            var url = 'getItem?' + areaNameQueryParam + '=' + country;
+
+            $http.get(url).then(function (response) {
+                console.log(response.data.InfoTxt);
+                $scope.countryHeader = response.data.AreaName;
+                $scope.countryName = response.data.AreaName;
+                $scope.countryInfoList = response.data.InfoTxt;
+                searchPhotos(response.data.ImageQueryTxt);
+            });
+
+        }
+    });
 
     window.Website = window.Utility.extend(window.Website || {}, {
         Country: {
