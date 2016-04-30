@@ -3,17 +3,18 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node bin\/www"
+    "start": "node bin/www"
   },
   "dependencies": {
+    "angular": "^1.5.5",
     "body-parser": "x.x.x",
     "cookie-parser": "x.x.x",
     "debug": "x.x.x",
     "express": "x.x.x",
     "jade": "x.x.x",
-    "morgan": "x.x.x",
-    "serve-favicon": "x.x.x",
     "mongoose": "x.x.x",
-    "multer": "x.x.x"
+    "morgan": "x.x.x",
+    "multer": "x.x.x",
+    "serve-favicon": "x.x.x"
   }
 }
