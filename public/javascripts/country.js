@@ -71,7 +71,7 @@
 
     function main() {
 
-        $('#imgControlsDiv').hide();
+//        $('#imgControlsDiv').hide;
 
         // search box event handling
         $("query-area-form").on('submit', function (event) {
@@ -109,24 +109,28 @@
     }
 
     var app = angular.module('ngCountryApp', []);
-    app.controller('ngCountryCntr', function ($scope, $http) {
-        $scope.countryHeader = 'Country';
-        $scope.countryInfoList = [];
-        $scope.getCountryInfo = function (country) {
+    app.controller('ngCountryCntr', ['$scope', '$http', function ($scope, $http) {
+            $scope.countryHeader = 'Country';
+            $scope.countryInfoList = [];
+            $scope.getCountryInfo = function (country) {
 
-            var areaNameQueryParam = 'geo_area_name';
-            var url = 'getItem?' + areaNameQueryParam + '=' + country;
+                var areaNameQueryParam = 'geo_area_name';
+                var url = 'getItem?' + areaNameQueryParam + '=' + country;
 
-            $http.get(url).then(function (response) {
-                console.log(response.data.InfoTxt);
-                $scope.countryHeader = response.data.AreaName;
-                $scope.countryName = response.data.AreaName;
-                $scope.countryInfoList = response.data.InfoTxt;
-                searchPhotos(response.data.ImageQueryTxt);
-            });
+                $http.get(url).then(
+                        function successCallback(response) {
+                            console.log(response.data.InfoTxt);
+                            $scope.countryHeader = response.data.AreaName;
+                            $scope.countryName = response.data.AreaName;
+                            $scope.countryInfoList = response.data.InfoTxt;
+                            searchPhotos(response.data.ImageQueryTxt);
+                        },
+                        function errorCallback(response) {
+                            console.log(response);
+                        });
 
-        }
-    });
+            }
+        }]);
 
     window.Website = window.Utility.extend(window.Website || {}, {
         Country: {

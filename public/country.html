@@ -8,7 +8,7 @@
         <title>Country Info</title>
 
         <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
-        <link href="stylesheets/gallery.css" rel="stylesheet">
+        <link href="stylesheets/country.css" rel="stylesheet">
 
         <script src="javascripts/angular.js"></script>
     </head>
@@ -26,11 +26,12 @@
                     </div>
                 </form>
                 <div class="btn-group navbar-left" role="group" aria-label="...">
-                    <button ng-click="getCountryInfo('England')" value="England" id="englandButton" type="button" class="btn btn-default country">England</button>
+                    <button ng-click="getCountryInfo('USA')" value="USA" id="englandButton" type="button" class="btn btn-default country">USA</button>
+                    <button ng-click="getCountryInfo('Brazil')" value="Brazil" id="greeceButton" type="button" class="btn btn-default country">Brazil</button>
                     <button ng-click="getCountryInfo('France')" value="France" id="franceButton" type="button" class="btn btn-default country">France</button>
-                    <button ng-click="getCountryInfo('Greece')" value="Greece" id="greeceButton" type="button" class="btn btn-default country">Greece</button>
-                    <button ng-click="getCountryInfo('Italy')" value="Italy" id="italyButton" type="button" class="btn btn-default country">Italy</button>
-                    <button ng-click="getCountryInfo('Spain')" value="Spain" id="spainButton" type="button" class="btn btn-default country">Spain</button>
+                    <button ng-click="getCountryInfo('Egypt')" value="Egypt" id="italyButton" type="button" class="btn btn-default country">Egypt</button>
+                    <button ng-click="getCountryInfo('India')" value="India" id="spainButton" type="button" class="btn btn-default country">India</button>
+                    <button ng-click="getCountryInfo('Australia')" value="Australia" id="spainButton" type="button" class="btn btn-default country">Australia</button>
                 </div>
             </div> 
         </header>
@@ -39,12 +40,23 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
+                        <div class="jumbotron">
+                            <img id="worldMapImage" class="fullWidth" src="images/world-map.gif" usemap="#world-map">
+                            <map name="world-map">
+                                <area name="USA" ng-click="getCountryInfo('USA')" onclick="return false"  shape="poly" coords="143,279,248,277,300,305,332,283,341,297,294,382,237,376,150,340,146,278,147,283" href=""  alt="" title="" OnMouseOver="window.status = 'United States'; return true" OnMouseOut="window.status = ''; return true">
+                                <area name="Brazil" ng-click="getCountryInfo('Brazil')" onclick="return false"  shape="poly" coords="317,491,333,457,358,449,367,460,392,451,453,486,387,580,371,568,382,553,341,496,326,502,316,490,316,490" href=""  alt="" title="" OnMouseOver="window.status = 'Brazil'; return true" OnMouseOut="window.status = ''; return true">
+                                <area name="France" ng-click="getCountryInfo('France')" onclick="return false" shape="poly" coords="545,280,570,266,588,278,584,302,571,310,555,304,545,280,545,280" href=""  alt="" title="" OnMouseOver="window.status = 'France'; return true" OnMouseOut="window.status = ''; return true">
+                                <area name="Egypt" ng-click="getCountryInfo('Egypt')" onclick="return false"  shape="poly" coords="644,350,645,391,679,392,681,384,676,355,645,352" href=""  alt="" title="" OnMouseOver="window.status = 'Egypt'; return true" OnMouseOut="window.status = ''; return true">
+                                <area name="India" ng-click="getCountryInfo('India')" onclick="return false"  shape="poly" coords="813,341,788,385,818,436,857,388,854,373,827,365,829,338,814,340" href=""  alt="" title="" OnMouseOver="window.status = 'India'; return true" OnMouseOut="window.status = ''; return true">
+                                <area name="Australia" ng-click="getCountryInfo('Australia')" onclick="return false"  shape="poly" coords="938,540,1009,498,1015,516,1030,521,1035,496,1074,554,1053,626,1002,577,944,590,939,539" href=""  alt="" title="" OnMouseOver="window.status = 'Australia'; return true" OnMouseOut="window.status = ''; return true">
+                            </map>                        
+                        </div>
                         <div class="jumbotron" id="jumbotronAreaImage">
 
                             <div>
-                                <img class="img-responsive center-block img-rounded" id="imgCountry">
+                                <img class="img-responsive center-block img-rounded fullWidth" id="imgCountry">
                             </div>
-                            <div style="margin-top: 10px" id="imgControlsDiv">
+                            <div style="margin-top: 10px; display: none" id="imgControlsDiv">
                                 <a style="float: left" class="controls next btn btn-default" href="#" role="button">
                                     next
                                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
@@ -70,13 +82,20 @@
 
         <script src="javascripts/jquery-2.2.2.js"></script>
         <script src="bootstrap/js/bootstrap.js"></script>
+        <script src="javascripts/jquery.rwdImageMaps.min.js"></script>
 
         <script src="javascripts/utility.js"></script>
         <script src="javascripts/gallery.js"></script>
         <script src="javascripts/flickr.js"></script>
         <script src="javascripts/country.js"></script>
 
-        <script>$(document).ready(Website.Country.main);</script>
+        <script>
+            $(document).ready(function (e) {
+                Website.Country.main;
+                $('img[usemap]').rwdImageMaps();
+                
+            });
+        </script>
 
     </body>
 </html>
