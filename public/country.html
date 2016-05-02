@@ -25,11 +25,11 @@
         <header>
             <div class="container-fluid">
                 <div class="page-header">
-                    <h3 style="text-align: center">{{countryHeader}} Information</h3>
+                    <h3 style="text-align: center">{{countryHeader}}</h3>
                 </div>
                 <form id="query-area-form" class="navbar-form navbar-right">
                     <div class="form-group">
-                        <input ng-model="countryName" form="query-area-form" class="form-control" type="search" name="area-name" id="area-query-input" placeholder="Search for Country" required>
+                        <input ng-model="countryName" form="query-area-form" class="form-control" type="search" name="area-name" id="inputAreaQuery" placeholder="Search for Country" required>
                         <button ng-click="getCountryInfo(countryName)" form="query-area-form" id="area-query-button" type="submit" class="btn btn-success">Go</button>
                     </div>
                 </form>
@@ -40,6 +40,7 @@
                     <button ng-click="getCountryInfo('Egypt')" value="Egypt" id="italyButton" type="button" class="btn btn-default country">Egypt</button>
                     <button ng-click="getCountryInfo('India')" value="India" id="spainButton" type="button" class="btn btn-default country">India</button>
                     <button ng-click="getCountryInfo('Australia')" value="Australia" id="spainButton" type="button" class="btn btn-default country">Australia</button>
+                    <button value="newCountry" id="buttonToggleNewCountryForm" type="button" class="btn btn-default">Create New Country</button>
                 </div>
             </div> 
         </header>
@@ -48,25 +49,25 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div>
-                        <form id="formInsertNewCountry">
-                            <div class="form-group">
-                                <label for="inputAreaName">Country Name</label>
-                                <input type="text" class="form-control" id="inputAreaName" placeholder="Country" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputFlickrQryTxt">Query for Image Search</label>
-                                <input type="text" class="form-control" id="inputFlickrQryTxt" placeholder="Image Search Text">
-                            </div>
-                            <div class="form-group">
-                                <label for="inputCountryInfo">Country Information</label>
-                                <textarea id="inputCountryInfo" class="form-control" rows="3"></textarea>
-                            </div>
-                            <button id="buttonInsertNewCountry" form="formInsertNewCountry" type="submit" class="btn btn-default">Submit</button>
-                        </form>
+                        <div style="display: none" class="jumbotron" id="jumbotronNewCountryForm">
+                            <form id="formInsertNewCountry" method="post">
+                                <div class="form-group">
+                                    <label for="inputAreaName">Country Name</label>
+                                    <input type="text" class="form-control" id="inputAreaName" placeholder="Country" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputFlickrQryTxt">Query for Image Search</label>
+                                    <input type="text" class="form-control" id="inputFlickrQryTxt" placeholder="Image Search Text">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputCountryInfo">Country Information</label>
+                                    <textarea id="inputCountryInfo" class="form-control" rows="3" placeholder="Country Information"></textarea>
+                                </div>
+                                <button id="buttonInsertNewCountry" form="formInsertNewCountry" type="submit" class="btn btn-default">Submit</button>
+                            </form>
                         </div>
                         <div class="jumbotron">
-                            <img id="worldMapImage" class="fullWidth img-responsive" src="images/world-map.gif" usemap="#world-map">
+                            <img id="worldMapImage" class="fullWidth img-responsive img-rounded" src="images/world-map.gif" usemap="#world-map">
                             <map name="world-map">
                                 <area id="area_USA" name="USA"  title="USA"
                                       ng-click="getCountryInfo('USA')" data-toggle="tooltip" onclick="return false"  shape="poly" 
@@ -88,12 +89,12 @@
                                       coords="938,540,1009,498,1015,516,1030,521,1035,496,1074,554,1053,626,1002,577,944,590,939,539">
                             </map>                        
                         </div>
-                        <div class="jumbotron" id="jumbotronAreaImage">
+                        <div style="display: none" class="jumbotron" id="jumbotronAreaImage">
 
                             <div>
                                 <img class="img-responsive center-block img-rounded fullWidth" id="imgCountry">
                             </div>
-                            <div style="margin-top: 10px; display: none" id="imgControlsDiv">
+                            <div style="margin-top: 10px" id="imgControlsDiv">
                                 <a style="float: left" class="controls next btn btn-default" href="#" role="button">
                                     next
                                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
@@ -105,7 +106,8 @@
                             </div>
 
                         </div>
-                        <div class="jumbotron" id="countryInfo">
+                        <div style="display: none" class="jumbotron" id="jumboTronCountryInfo">
+                            <h3 id="h3CountryInfo" style="text-align: center">{{countryHeader}} Information</h3>
                             <ul id="area-info-ul" class="list-group">
                                 <li class="list-group-item" ng-repeat="countryInfo in countryInfoList">{{countryInfo}}</li>
                             </ul>
@@ -123,16 +125,16 @@
         <script src="javascripts/country.js"></script>
 
         <script>
-                $(document).ready(function (e) {
-                    $('#worldMapImage').rwdImageMaps();
-                    $('#area_USA').tooltip({track: true});
-                    $('#area_Brazil').tooltip({track: true});
-                    $('#area_France').tooltip({track: true});
-                    $('#area_Egypt').tooltip({track: true});
-                    $('#area_India').tooltip({track: true});
-                    $('#area_Australia').tooltip({track: true});
-                    Website.Country.main();
-                });
+                                            $(document).ready(function (e) {
+                                                $('#worldMapImage').rwdImageMaps();
+                                                $('#area_USA').tooltip({track: true});
+                                                $('#area_Brazil').tooltip({track: true});
+                                                $('#area_France').tooltip({track: true});
+                                                $('#area_Egypt').tooltip({track: true});
+                                                $('#area_India').tooltip({track: true});
+                                                $('#area_Australia').tooltip({track: true});
+                                                Website.Country.main();
+                                            });
         </script>
 
     </body>

@@ -5,11 +5,41 @@
     var classes = 'list-group-item';
     var countryItem = {};
 
+    function insertHandler() {
+
+        if ($('#inputAreaName').val().length > 0) {
+            var countryName = $('#inputAreaName').val();
+            var countryFlckrSrchTxt = $('#inputFlickrQryTxt').val();
+            var countryInfo = $('#inputCountryInfo').val();
+
+            var newCountry = {
+                AreaName: countryName,
+                ImageQueryTxt: countryFlckrSrchTxt,
+                InfoTxt: countryInfo
+            };
+
+            $.post("putItem", newCountry, function (result) {
+                console.log(result);
+
+                $('#inputAreaName').val("");
+                $('#inputFlickrQryTxt').val('');
+                $('#inputCountryInfo').val('');
+
+                searchHandler(newCountry.AreaName);
+            }).fail(function () {
+                console.log("DB item insertion failed.\n");
+            });
+        }
+        else {
+            
+        }
+    }
+
     function searchHandler(areaName) {
 
-//            var areaNameQueryParam = 'geo_area_name';
-//            var url = 'getItem?' + areaNameQueryParam + '=' + areaName;
-        countryItem = {};
+//        var areaNameQueryParam = 'geo_area_name';
+//        var url = 'getItem?' + areaNameQueryParam + '=' + areaName;
+//        countryItem = {};
 
         var url = 'getItem';
 
@@ -20,10 +50,10 @@
         $.getJSON(url, requestParameters)
                 .success(function (json) {
                     console.log("Client found:" + json.AreaName);
-                    countryItem = json;
+//                    countryItem = json;
                     populateCountryInfoList(json);
                     searchPhotos(json.ImageQueryTxt);
-                    $('div.page-header h3').text(newCountry.AreaName + " Information")
+                    updateAfterSearch(json.AreaName);
                 })
 //                    .done(function (json) {
 //                        var foundItem = json;
@@ -32,11 +62,19 @@
                 .fail(function (jqxhr, textStatus, error) {
                     var err = textStatus + ", " + error;
                     console.log("Request Failed: " + err);
-                    countryItem = null;
+//                    countryItem = null;
                 });
 //                    .always(function () {
 //                        console.log("complete");
 //                    });
+    }
+
+    function updateAfterSearch(countryName) {
+        $('#h3CountryInfo').text(countryName + " Information");
+        $('div.page-header h3').text(countryName);
+        $('#jumbotronAreaImage').show();
+        $('#jumboTronCountryInfo').show();
+        $('#inputAreaQuery').val(countryName);
     }
 
     function searchPhotos(searchText, page) {
@@ -49,7 +87,12 @@
     }
 
     function showPhotos(data) {
-        window.Gallery.ProcessPhotos(data.photos.photo);
+        window.Gallery.ProcessPhotos(
+                data.photos.photo,
+                $('#imgControlsDiv').first(),
+                $('a.next').first(),
+                $('a.previous').first(),
+                $('#imgCountry').first());
     }
 
     function populateCountryInfoList(areaInfo) {
@@ -70,41 +113,23 @@
         }
     }
 
-    function insertHandler() {
-
-        if ($('#inputAreaName').length > 0) {
-            var countryName = $('#inputAreaName').val();
-            var countryFlckrSrchTxt = $('#inputFlickrQryTxt').val();
-            var countryInfo = $('#inputCountryInfo').val();
-            var newCountry = {
-                AreaName: countryName,
-                ImageQueryTxt: countryFlckrSrchTxt,
-                InfoTxt: countryInfo
-            };
-            $.post("putItem", newCountry, function (result) {
-                console.log(result);
-                searchHandler(newCountry.AreaName);
-                $('#inputAreaName').val("");
-                $('#inputFlickrQryTxt').val('');
-                $('#inputCountryInfo').val('');
-            }).fail(function () {
-                alert("error");
-            });
-        }
-    }
-
     function main() {
-
-//        $('#imgControlsDiv').hide;
 
         // search box event handling
         $("query-area-form").on('submit', function (event) {
             event.preventDefault();
 
-            if ($('#area-query-input').length > 0) {
-                var country = $('#area-query-input').val();
+            if ($('#inputAreaQuery').length > 0) {
+                var country = $('#inputAreaQuery').val();
                 searchHandler(country);
+                $('#jumbotronNewCountryForm').hide();
             }
+        });
+
+        $('#buttonToggleNewCountryForm').on('click', function (event) {
+            $('#jumbotronNewCountryForm').toggle();
+            
+            return false;
         });
 
         $("#formInsertNewCountry").on('submit', function (event) {
@@ -121,8 +146,8 @@
          $('#area-query-button').on('click', function (event) {
          event.preventDefault();
          
-         if ($('#area-query-input').length > 0)
-         searchHandler($('#area-query-input').val());
+         if ($('#inputAreaQuery').length > 0)
+         searchHandler($('#inputAreaQuery').val());
          });
          
          $('button.country').click(function (event) {
@@ -131,7 +156,7 @@
          return false;
          });
          
-         $("#area-query-input").keypress(function (event) {
+         $("#inputAreaQuery").keypress(function (event) {
          if (event.which == 13) {
          event.preventDefault();
          
@@ -147,22 +172,27 @@
             $scope.countryInfoList = [];
             $scope.getCountryInfo = function (country) {
 
+                if (!country)
+                    return "";
+                
                 var areaNameQueryParam = 'geo_area_name';
                 var url = 'getItem?' + areaNameQueryParam + '=' + country;
 
                 $http.get(url).then(
                         function successCallback(response) {
                             console.log(response.data.InfoTxt);
-                            $scope.countryHeader = response.data.AreaName;
+//                            $scope.countryHeader = response.data.AreaName;
                             $scope.countryName = response.data.AreaName;
                             $scope.countryInfoList = response.data.InfoTxt;
                             searchPhotos(response.data.ImageQueryTxt);
+                            updateAfterSearch($scope.countryName);
+                            $('#jumbotronNewCountryForm').hide();
                         },
                         function errorCallback(response) {
                             console.log(response);
                         });
 
-            }
+            };
         }]);
 
     window.Website = window.Utility.extend(window.Website || {}, {

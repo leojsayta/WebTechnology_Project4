@@ -5,15 +5,21 @@
     var numPhotos = 0;
     var photos = [];
     var isInitialized = false;
+    var $aNext, $aPrev, $img, $imgCntrlDiv;
 
-    function processPhotos(photoCollection) {
+    function processPhotos(photoCollection, jqImgCtrlDiv, jqANext, jqAPrev, jqImg) {
         photos = photoCollection;
         numPhotos = photos.length;
         currentIndex = 0;
 
-        if (!isInitialized)
+        if (!isInitialized) {
+            $imgCntrlDiv = jqImgCtrlDiv;
+            $aNext = jqANext;
+            $aPrev = jqAPrev;
+            $img = jqImg;
             setUpImageHandlers();
-        
+        }
+
         showImage();
     }
 
@@ -49,9 +55,9 @@
             };
         }
 
-        $('a.next').on('click', nextClickHandler());
-        $('a.previous').on('click', prevClickHandler());
-        $('#imgControlsDiv').show();
+        $aNext.on('click', nextClickHandler());
+        $aPrev.on('click', prevClickHandler());
+        $imgCntrlDiv.show();
 
         isInitialized = true;
     }
@@ -59,15 +65,15 @@
     function showHideControls() {
 
         if (numPhotos === currentIndex + 1) {
-            $('a.next').hide();
+            $aNext.hide();
         } else {
-            $('a.next').show();
+            $aNext.show();
         }
 
         if (currentIndex === 0) {
-            $('a.previous').hide();
+            $aPrev.hide();
         } else {
-            $('a.previous').show();
+            $aPrev.show();
         }
     }
 
@@ -77,7 +83,7 @@
             return false;
         }
 
-        $('#imgCountry').attr('src', window.Flickr.buildPhotoLargeUrl(photos[currentIndex]));
+        $img.attr('src', window.Flickr.buildPhotoLargeUrl(photos[currentIndex]));
 
         showHideControls();
     }
@@ -85,5 +91,5 @@
     window.Gallery = window.Utility.extend(window.Gallery || {}, {
         ProcessPhotos: processPhotos
     });
-    
+
 })();
