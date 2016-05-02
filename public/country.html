@@ -14,11 +14,11 @@
         <script src="javascripts/jquery.rwdImageMaps.js"></script>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-        
+
         <script src="javascripts/angular.js"></script>
-        
+
         <link href="stylesheets/country.css" rel="stylesheet">
-        
+
     </head>
     <body ng-app="ngCountryApp" ng-controller="ngCountryCntr">
 
@@ -48,6 +48,23 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
+                        <div>
+                        <form id="formInsertNewCountry">
+                            <div class="form-group">
+                                <label for="inputAreaName">Country Name</label>
+                                <input type="text" class="form-control" id="inputAreaName" placeholder="Country" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputFlickrQryTxt">Query for Image Search</label>
+                                <input type="text" class="form-control" id="inputFlickrQryTxt" placeholder="Image Search Text">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputCountryInfo">Country Information</label>
+                                <textarea id="inputCountryInfo" class="form-control" rows="3"></textarea>
+                            </div>
+                            <button id="buttonInsertNewCountry" form="formInsertNewCountry" type="submit" class="btn btn-default">Submit</button>
+                        </form>
+                        </div>
                         <div class="jumbotron">
                             <img id="worldMapImage" class="fullWidth img-responsive" src="images/world-map.gif" usemap="#world-map">
                             <map name="world-map">
@@ -106,15 +123,15 @@
         <script src="javascripts/country.js"></script>
 
         <script>
-            $(document).ready(function (e) {
-                $('#worldMapImage').rwdImageMaps(); 
-                $('#area_USA').tooltip({track: true});
-                $('#area_Brazil').tooltip({track: true});
-                $('#area_France').tooltip({track: true});
-                $('#area_Egypt').tooltip({track: true});
-                $('#area_India').tooltip({track: true});
-                $('#area_Australia').tooltip({track: true});
-                Website.Country.main;
+                $(document).ready(function (e) {
+                    $('#worldMapImage').rwdImageMaps();
+                    $('#area_USA').tooltip({track: true});
+                    $('#area_Brazil').tooltip({track: true});
+                    $('#area_France').tooltip({track: true});
+                    $('#area_Egypt').tooltip({track: true});
+                    $('#area_India').tooltip({track: true});
+                    $('#area_Australia').tooltip({track: true});
+                    Website.Country.main();
                 });
         </script>
 

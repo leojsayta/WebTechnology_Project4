@@ -76,28 +76,31 @@ app.get("/getItem", function (req, res) {
     console.log(queriedAreaName);
     Country.findOne({AreaName: queriedAreaName}, function (err, item) {
         if (err !== null) {
-            console.log("Server Error");
+            console.log("Server Error:\n" + err);
         } else {
-            console.log("Server query success:" + item);
+            console.log("Server query success:  " + item);
             res.send(item);
         }
     });
 });
 
-//app.post("/putItem", function (req, res) {
-//    var newItem = new Item({"description": req.body.description,
-//        "sku": req.body.sku,
-//        "quantity": req.body.quantity,
-//        "price": req.body.price});
-//    newItem.save(function (err, result) {
-//        if (err !== null) {
-//            console.log(err);
-//            res.send("ERROR");
-//        } else {
-//            res.send("Item inserted/updated.");
-//        }
-//    });
-//});
+app.post("/putItem", function (req, res) {
+    var icf = req.body.InfoTxt;
+    var iqt = req.body.ImageQueryTxt;
+    var an = req.body.AreaName;
+    var newCountry = new Country({
+        InfoTxt: [icf],
+        ImageQueryTxt: iqt,
+        AreaName: an});
+    newCountry.save(function (err, result, numAffected) {
+        if (err !== null) {
+            console.log("Server Error:\n" + err);
+            res.send("SERVER ERROR");
+        } else {
+            res.send(result);
+        }
+    });
+});
 
 
 

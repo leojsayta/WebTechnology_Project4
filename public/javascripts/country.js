@@ -23,6 +23,7 @@
                     countryItem = json;
                     populateCountryInfoList(json);
                     searchPhotos(json.ImageQueryTxt);
+                    $('div.page-header h3').text(newCountry.AreaName + " Information")
                 })
 //                    .done(function (json) {
 //                        var foundItem = json;
@@ -69,6 +70,29 @@
         }
     }
 
+    function insertHandler() {
+
+        if ($('#inputAreaName').length > 0) {
+            var countryName = $('#inputAreaName').val();
+            var countryFlckrSrchTxt = $('#inputFlickrQryTxt').val();
+            var countryInfo = $('#inputCountryInfo').val();
+            var newCountry = {
+                AreaName: countryName,
+                ImageQueryTxt: countryFlckrSrchTxt,
+                InfoTxt: countryInfo
+            };
+            $.post("putItem", newCountry, function (result) {
+                console.log(result);
+                searchHandler(newCountry.AreaName);
+                $('#inputAreaName').val("");
+                $('#inputFlickrQryTxt').val('');
+                $('#inputCountryInfo').val('');
+            }).fail(function () {
+                alert("error");
+            });
+        }
+    }
+
     function main() {
 
 //        $('#imgControlsDiv').hide;
@@ -79,9 +103,18 @@
 
             if ($('#area-query-input').length > 0) {
                 var country = $('#area-query-input').val();
-                $('div.page-header h3').text(country + " Information")
                 searchHandler(country);
             }
+        });
+
+        $("#formInsertNewCountry").on('submit', function (event) {
+            event.preventDefault();
+            insertHandler();
+        });
+
+        $('#buttonInsertNewCountry').on('click', function (event) {
+            insertHandler();
+            return false;
         });
 
         /*
