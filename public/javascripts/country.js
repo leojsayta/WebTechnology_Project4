@@ -21,7 +21,7 @@
             $.post("putItem", newCountry, function (result) {
                 console.log(result);
 
-                $('#inputAreaName').val("");
+                $('#inputAreaName').val('');
                 $('#inputFlickrQryTxt').val('');
                 $('#inputCountryInfo').val('');
 
