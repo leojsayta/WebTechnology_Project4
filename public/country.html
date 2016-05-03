@@ -90,7 +90,6 @@
                             </map>                        
                         </div>
                         <div style="display: none" class="jumbotron" id="jumbotronAreaImage">
-
                             <div>
                                 <img class="img-responsive center-block img-rounded fullWidth" id="imgCountry">
                             </div>
@@ -104,7 +103,6 @@
                                     prev
                                 </a>
                             </div>
-
                         </div>
                         <div style="display: none" class="jumbotron" id="jumboTronCountryInfo">
                             <h3 id="h3CountryInfo" style="text-align: center">{{countryHeader}} Information</h3>
@@ -125,16 +123,16 @@
         <script src="javascripts/country.js"></script>
 
         <script>
-                                            $(document).ready(function (e) {
-                                                $('#worldMapImage').rwdImageMaps();
-                                                $('#area_USA').tooltip({track: true});
-                                                $('#area_Brazil').tooltip({track: true});
-                                                $('#area_France').tooltip({track: true});
-                                                $('#area_Egypt').tooltip({track: true});
-                                                $('#area_India').tooltip({track: true});
-                                                $('#area_Australia').tooltip({track: true});
-                                                Website.Country.main();
-                                            });
+            $(document).ready(function (e) {
+                $('#worldMapImage').rwdImageMaps();
+                $('#area_USA').tooltip({track: true});
+                $('#area_Brazil').tooltip({track: true});
+                $('#area_France').tooltip({track: true});
+                $('#area_Egypt').tooltip({track: true});
+                $('#area_India').tooltip({track: true});
+                $('#area_Australia').tooltip({track: true});
+                Website.Country.main();
+            });
         </script>
 
     </body>
